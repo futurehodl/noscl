@@ -24,6 +24,7 @@ Usage:
   noscl message [--reference=<id>...] <pubkey> <content>
   noscl metadata --name=<name> [--about=<about>] [--picture=<picture>] [--nip05=<nip05>] [--banner=<banner>] [--displayname=<displayname>] [--lud16=<lud16>] [--username=<username>] [--website=<website>]
   noscl profile [--verbose] [--json] <pubkey>
+  noscl profileToTxtFile [--verbose] [--json] <pubkey>
   noscl follow <pubkey> [--name=<name>]
   noscl unfollow <pubkey>
   noscl following
@@ -68,11 +69,12 @@ func main() {
 	config.Init()
 
 	// parse args
+	log.Printf("args: %v", flag.Args())
 	opts, err := docopt.ParseArgs(USAGE, flag.Args(), "")
 	if err != nil {
 		return
 	}
-
+	log.Printf("parsed!")
 	switch {
 	case opts["home"].(bool):
 		home(opts, false)
@@ -100,6 +102,8 @@ func main() {
 		setMetadata(opts)
 	case opts["profile"].(bool):
 		showProfile(opts)
+	case opts["profileToTxtFile"].(bool):
+		profileToTxtFile(opts)
 	case opts["follow"].(bool):
 		follow(opts)
 		saveConfig(path)

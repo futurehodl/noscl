@@ -35,19 +35,19 @@ func printEvent(evt nostr.Event, nick *string, verbose bool, jsonformat bool) {
 	}
 
 	// Don't print encrypted messages that aren't for me or from me
-    pubkey := getPubKey(config.PrivateKey)
+	pubkey := getPubKey(config.PrivateKey)
 	if evt.Kind == nostr.KindEncryptedDirectMessage {
 		if (!evt.Tags.ContainsAny("p", nostr.Tag{getPubKey(config.PrivateKey)})) && (evt.PubKey != pubkey) {
 			return
 		}
 	}
 
-    // json
-    if jsonformat {
-        jevt, _ := json.MarshalIndent(evt, "", "\t")
-        fmt.Print(string(jevt))
-        return
-    }
+	// json
+	if jsonformat {
+		jevt, _ := json.MarshalIndent(evt, "", "\t")
+		fmt.Print(string(jevt))
+		return
+	}
 
 	var ID string = shorten(evt.ID)
 	var fromField string = shorten(evt.PubKey)
