@@ -29,8 +29,8 @@ func showProfile(opts docopt.Opts) {
 }
 
 func profileToTxtFile(opts docopt.Opts) {
-	verbose, _ := opts.Bool("--verbose")
-	jsonformat, _ := opts.Bool("--json")
+	// verbose, _ := opts.Bool("--verbose")
+	// jsonformat, _ := opts.Bool("--json")
 	key := nip19.TranslatePublicKey(opts["<pubkey>"].(string))
 	if key == "" {
 		log.Println("Profile key is empty! Exiting.")
@@ -43,14 +43,13 @@ func profileToTxtFile(opts docopt.Opts) {
 
 	// process new events and add them to the text file
 	for event := range nostr.Unique(all) {
-		printEvent(event, nil, verbose, jsonformat)
+		// printEvent(event, nil, verbose, jsonformat)
+		log.Println(event.ID)
 		appendEventToFile(event)
 	}
 }
 
 func appendEventToFile(event nostr.Event) {
-	fmt.Println("Appending event to file:", event)
-
 	// Read existing events from file
 	data, err := ioutil.ReadFile(config.EventFilepath)
 	if err != nil {
@@ -78,10 +77,11 @@ func appendEventToFile(event nostr.Event) {
 
 	// Append event if id does not exist
 	if !idExists {
-		fmt.Println("Event ID does not exist in file. Appending...")
+		fmt.Println("Event ID", event.ID, "does not exist in file. Appending...")
 		existingEvents = append(existingEvents, event)
+		//printEvent(event, nil, true, true)
 	} else {
-		fmt.Println("Event ID already exists in file. Skipping...")
+		fmt.Println("Event ID", event.ID, "already exists in file. Skipping...")
 	}
 
 	// Write updated events to file
@@ -95,7 +95,7 @@ func appendEventToFile(event nostr.Event) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Event appended to file successfully!")
+	// fmt.Println("Event appended to file successfully!")
 }
 
 func follow(opts docopt.Opts) {
