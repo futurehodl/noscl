@@ -52,7 +52,7 @@ func appendEventToFile(event nostr.Event) {
 	fmt.Println("Appending event to file:", event)
 
 	// Read existing events from file
-	data, err := ioutil.ReadFile("events.txt")
+	data, err := ioutil.ReadFile(config.EventFilepath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -90,7 +90,7 @@ func appendEventToFile(event nostr.Event) {
 		log.Fatal(err)
 	}
 
-	err = ioutil.WriteFile("events.txt", updatedData, 0644)
+	err = ioutil.WriteFile(config.EventFilepath, updatedData, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

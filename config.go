@@ -3,10 +3,11 @@ package main
 var config Config
 
 type Config struct {
-	DataDir    string            `json:"-"`
-	Relays     map[string]Policy `json:"relays,flow"`
-	Following  map[string]Follow `json:"following,flow"`
-	PrivateKey string            `json:"privatekey,omitempty"`
+	DataDir       string            `json:"-"`
+	Relays        map[string]Policy `json:"relays,flow"`
+	Following     map[string]Follow `json:"following,flow"`
+	PrivateKey    string            `json:"privatekey,omitempty"`
+	EventFilepath string            `json:"filepath,omitempty"`
 }
 
 type Follow struct {
