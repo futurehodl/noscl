@@ -44,9 +44,19 @@ from stdin.
 
 func main() {
 	// find datadir
-	flag.StringVar(&config.DataDir, "datadir", "~/.config/nostr",
-		"Base directory for configurations and data from Nostr.")
+	// flag.StringVar(&config.DataDir, "datadir", "~/.config/nostr",
+	// 	"Base directory for configurations and data from Nostr.")
+	// flag.Parse()
+
+	currentDir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	flag.StringVar(&config.DataDir, "datadir", currentDir, "Base directory for configurations and data from Nostr.")
+
 	flag.Parse()
+
 	config.DataDir, _ = homedir.Expand(config.DataDir)
 	os.Mkdir(config.DataDir, 0700)
 
