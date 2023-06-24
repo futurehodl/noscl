@@ -55,6 +55,8 @@ func main() {
 
 	flag.StringVar(&config.DataDir, "datadir", currentDir, "Base directory for configurations and data from Nostr.")
 
+	log.Printf("config datadir %v", &config.DataDir)
+
 	flag.Parse()
 
 	config.DataDir, _ = homedir.Expand(config.DataDir)
